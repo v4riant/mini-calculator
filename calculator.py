@@ -1,3 +1,5 @@
+import sys
+
 def add(a, b):
     return a + b
 
@@ -8,30 +10,25 @@ def multiply(a, b):
     return a * b
 
 def divide(a, b):
-    if b != 0:
-        return a / b
-    else:
+    if b == 0:
         return "Cannot divide by zero"
+    return a / b
 
-a = float(input("Enter first number: "))
-b = float(input("Enter second number: "))
-
-print("1. Add")
-print("2. Subtract")
-print("3. Multiply")
-print("4. Divide")
-
-choice = int(input("Enter your choice (1/2/3/4): "))
-
-if choice == 1:
-    print("Result:", add(a, b))
-elif choice == 2:
-    print("Result:", subtract(a, b))
-elif choice == 3:
-    print("Result:", multiply(a, b))
-elif choice == 4:
-    print("Result:", divide(a, b))
+# Get arguments
+if len(sys.argv) == 4:
+    num1 = float(sys.argv[1])
+    num2 = float(sys.argv[2])
+    operation = sys.argv[3]
+    
+    if operation == "add":
+        print(f"Result: {add(num1, num2)}")
+    elif operation == "subtract":
+        print(f"Result: {subtract(num1, num2)}")
+    elif operation == "multiply":
+        print(f"Result: {multiply(num1, num2)}")
+    elif operation == "divide":
+        print(f"Result: {divide(num1, num2)}")
+    else:
+        print("Invalid operation")
 else:
-    print("Invalid choice")
-
-sys.exit(0)
+    print("Invalid input. Usage: python calculator.py <num1> <num2> <operation>")
