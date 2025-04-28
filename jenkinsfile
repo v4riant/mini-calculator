@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Code') {
+            steps {
+                git 'https://github.com/v4riant/mini-calculator.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t mini-calculator .'
+                }
+            }
+        }
+        stage('Run Calculator') {
+            steps {
+                script {
+                    sh 'docker run -d --name mini-calculator-container mini-calculator'
+                }
+            }
+        }
+        stage('Clean Up') {
+            steps {
+                script {
+                    sh 'docker stop mini-calculator-container || true'
+                    sh 'docker rm mini-calculator-container || true'
+                }
+            }
+        }
+    }
+}
